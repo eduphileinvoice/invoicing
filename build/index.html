@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Eduphile Cash Receipt</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="AngularJS and Angular Code Example for creating Invoices and Invoicing Application"
+    />
+    <link
+      rel="stylesheet"
+      href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script
+      type="text/javascript"
+      src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"
+    ></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script src="js/html2pdf.bundle.min.js"></script>
+    <script>
+      function generatePDF() {
+        // Choose the element that our invoice is rendered in.
+        const element = document.getElementById("invoice");
+        // Choose the element and save the PDF for our user.
+        var opt = {
+          filename: "cash-receipt.pdf",
+          image: { type: "jpeg", quality: 0.98 },
+          jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+        };
+
+        // New Promise-based usage:
+        html2pdf().set(opt).from(element).save();
+        // html2pdf().from(element).save();
+      }
+    </script>
+    <!-- Favicons -->
+    <link href="images/favicon-2.png" rel="icon" />
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon" />
+  </head>
+  <body ng-app="invoicing" ng-controller="InvoiceCtrl">
+    <div class="container" width="800px" id="invoice" ng-if="form">
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>No.</th>
+        <th>Client Name</th>
+        <th>Amount</th>
+        <th>For</th>
+      </tr>
+      <tr ng-repeat="m in InvoiceList">
+        <td>{{m.date}}</td>
+        <td>{{m.invoice_number}}</td>
+        <td>{{m.customer_info.name}}</td>
+        <td>{{m.amount}}</td>
+        <td>{{m.customer_info.course}}</td>
+      </tr>
+    </table>
+    </div>
+    <div class="container" width="800px" id="invoice" ng-if="!form">
+      <div class="row">
+        <div class="col-xs-12 heading">
+          <!-- INVOICE -->
+        </div>
+      </div>
+      <div class="row branding">
+        <div class="col-xs-3 logo-container">
+          <img
+            ng-hide="logoRemoved"
+            id="company_logo"
+            ng-src="{{ logo }}"
+            alt="your image"
+            width="150"
+          />
+        </div>
+        <div class="col-xs-4" style="text-align: center">
+          <h3>E-Cash Receipt</h3>
+        </div>
+        <div class="col-xs-5">
+          <div class="invoice-number-container">
+            <label for="invoice-number">Invoice #</label>
+            <input
+              type="text"
+              id="invoice-number"
+              ng-model="invoice.invoice_number"
+            />
+          </div>
+          <div class="invoice-number-container">
+            <label for="date">Date</label>
+            <input type="text" id="date" ng-model="invoice.date" />
+          </div>
+          <div class="invoice-number-container">
+            <label for="payment">Payment Method</label>
+            <input type="text" id="payment" ng-model="invoice.payment_method" />
+          </div>
+          <div class="invoice-number-container">
+            <label for="amount">Amount</label>
+            <input type="text" id="amount" ng-model="invoice.amount" />
+          </div>
+        </div>
+      </div>
+      <div class="row infos" style="padding-top: 15px">
+        <div class="col-xs-9">
+          <div style="font-weight: bold">Received From</div>
+          <div class="input-container" >
+            <input type="text" style="font-weight: bold;" ng-model="invoice.customer_info.name" />
+          </div>
+          <div style="font-weight: bold" class="label-inv">For</div>
+          <span class="input-container"
+            ><input type="text" ng-model="invoice.customer_info.course"
+          /></span>
+          <div>
+            <div style="font-weight: bold" class="label-inv">
+              Amount in Words
+            </div>
+            <span class="input-container"
+              ><input type="text" ng-model="invoice.customer_info.amnt_words"
+            /></span>
+          </div>
+          <div style="margin-bottom: 20px">
+            <div style="font-weight: bold" class="label-inv">Received By</div>
+            <span class="input-container"
+              ><input type="text" ng-model="invoice.customer_info.by"
+            /></span>
+          </div>
+        </div>
+        <div class="col-xs-3">
+          <img src="images/signature.png" class="signature" />
+        </div>
+      </div>
+      <div style="text-align: center; margin-bottom: 20px">
+        Note :
+        <i
+          >The seat booking amount will not be refund under any
+          circumstances.</i
+        >
+      </div>
+      <div class="row">
+        <div class="col-xs-12 heading">
+          <!-- INVOICE -->
+        </div>
+      </div>
+    </div>
+    <div class="button-holder">
+      <button ng-click="printInfo()" ng-if="!form">Download as PDF</button>
+      <button ng-click="viewInvoice()" ng-if="!form">View Invoices</button>
+      <button ng-click="newInvoice()" ng-if="form">Create New Invoice</button>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+    <script>
+      //Store information about your firebase so we can connect
+
+      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      //IMPORTANT: REPLACE THESE WITH YOUR VALUES (these ones won't work)
+      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+     
+    </script>
+  </body>
+</html>
